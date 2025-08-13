@@ -269,8 +269,12 @@ def semantic_search(query: str, selected_speakers: Union[List[str], str], top_k:
                 continue
             
             if selected_speakers and selected_speakers != 'all':
-                if isinstance(selected_speakers, list) and speaker not in selected_speakers:
-                    continue
+                if isinstance(selected_speakers, list):
+                    if speaker not in selected_speakers:
+                        continue
+                elif isinstance(selected_speakers, str):
+                    if speaker != selected_speakers:
+                        continue
             
             item_embedding = np.array(item.get('embedding', []))
             if len(item_embedding) == 0:
